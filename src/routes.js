@@ -3,14 +3,29 @@ const routes = express.Router()
 
 const views = __dirname + '/views/'
 
-const profile = {
-    name: "Maby",
-    avatar: "https://unavatar.now.sh/github/MariaGabrielaReis",
-    "monthly-budget": 3000,
-    "days-per-week": 5,
-    "hours-per-day": 4,
-    "vacation-per-year": 10,
-    "value-hour": 75
+const Profile = {
+    data: {
+        name: "Maby",
+        avatar: "https://unavatar.now.sh/github/MariaGabrielaReis",
+        "monthly-budget": 3000,
+        "days-per-week": 5,
+        "hours-per-day": 4,
+        "vacation-per-year": 10,
+        "value-hour": 75
+    },
+
+    controllers: {
+        index(req, res){
+           return res.render(views + 'profile', { profile: Profile.data })
+        },
+
+        update(req, res) {
+            // quantas semanas tem um ano
+            //remover semana de férias do ano
+            // quantas horas por semana estão sendo trabalhadas
+            //total de horas trabalhadas no mês
+        }
+    }
 }
 
 const Job = {
@@ -42,7 +57,7 @@ const Job = {
                   ...job,
                  remaining,
                   status,
-                  budget: profile['value-hour'] * job['total-hours']
+                  budget: Profile.data['value-hour'] * job['total-hours']
                 }
             })
             
@@ -58,7 +73,7 @@ const Job = {
             // pra ver a última posição do array, ? = se existir, pega o id (não existe posição -1)
             const lastId = Job.data[Job.data.length - 1]?.id || 1;
     
-            jobs.push({
+            Job.data.push({
                 id: lastId + 1,
                 name: req.body.name,
                 "daily-hours": req.body["daily-hours"],
@@ -97,8 +112,9 @@ const Job = {
 routes.get('/', Job.controllers.index)
 routes.get('/job', Job.controllers.create)
 routes.get('/job/edit', (req, res) => res.render(views + 'job-edit'))
-routes.get('/profile', (req, res) => res.render(views + 'profile', { profile }))
+routes.get('/profile',  Profile.controllers.index)
 
+routes.post('/profile',  Profile.controllers.update)
 routes.post('/job', Job.controllers.save)
 
 module.exports = routes;
