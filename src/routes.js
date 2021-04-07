@@ -86,7 +86,7 @@ const Job = {
 
         save(req, res) {
             // pra ver a última posição do array, ? = se existir, pega o id (não existe posição -1)
-            const lastId = Job.data[Job.data.length - 1]?.id || 1;
+            const lastId = Job.data[Job.data.length - 1]?.id || 0;
     
             Job.data.push({
                 id: lastId + 1,
@@ -98,7 +98,7 @@ const Job = {
 
             return res.redirect('/')
         },
-
+          
         show(req, res) {
 
             const jobId = req.params.id
@@ -111,7 +111,34 @@ const Job = {
 
             job.budget = Job.services.calculateBudget(job, Profile.data["value-hour"])
             return res.render(views + 'job-edit', { job })
-        }
+        },
+
+        update(req, res) {
+            const jobId = req.params.id
+      
+            const job = Job.data.find(job => Number(job.id) === Number(jobId))
+      
+            if (!job) {
+              return res.send('Projeto não encontrado!')
+            }
+      
+            const updatedJob = {
+              ...job, 
+              name: req.body.name,
+              "total-hours": req.body["total-hours"], 
+              "daily-hours": req.body["daily-hours"]
+            }
+      
+            Job.data = Job.data.map(job => {
+              if(Number(job.id) === Number(jobId)) {
+                job = updatedJob
+              }
+      
+              return job
+            })
+      
+            res.redirect('/job/' + jobId)
+          }
     },
 
     services: {
@@ -143,9 +170,10 @@ const Job = {
 routes.get('/', Job.controllers.index)
 routes.get('/job', Job.controllers.create)
 routes.get('/job/:id', Job.controllers.show)
-routes.get('/profile',  Profile.controllers.index)
+routes.get('/profile', Profile.controllers.index)
 
-routes.post('/profile',  Profile.controllers.update)
+routes.post('/profile', Profile.controllers.update)
 routes.post('/job', Job.controllers.save)
+routes.post('/job/:id', Job.controllers.update)
 
 module.exports = routes;
