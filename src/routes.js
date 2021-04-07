@@ -12,9 +12,24 @@ const profile = {
     "vacation-per-year": 10
 }
 
-const jobs = []
+const jobs = [
+    {
+        id: 1,
+        name: "Padaria Pãozinho Quente",
+        "daily-hours": 2,
+        "total-hours": 60,
+        created_at: Date.now()
+    },
+    {
+        id: 2,
+        name: "Pizzaria S&S",
+        "daily-hours": 3,
+        "total-hours": 40,
+        created_at: Date.now()
+    }
+]
 
-routes.get('/', (req, res) => res.render(views + 'index'))
+routes.get('/', (req, res) => res.render(views + 'index', { jobs }))
 routes.get('/job', (req, res) => res.render(views + 'job'))
 routes.get('/job/edit', (req, res) => res.render(views + 'job-edit'))
 routes.get('/profile', (req, res) => res.render(views + 'profile', { profile }))
@@ -30,7 +45,7 @@ routes.post('/job', (req, res) => {
         "total-hours": req.body["total-hours"],
         created_at: Date.now()
     })
-    
+
     return res.redirect('/')
 })
 
