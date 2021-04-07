@@ -18,7 +18,7 @@ const jobs = [
         id: 1,
         name: "Padaria Pãozinho Quente",
         "daily-hours": 2,
-        "total-hours": 60,
+        "total-hours": 1,
         created_at: Date.now()
     },
     {
