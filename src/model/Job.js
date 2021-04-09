@@ -39,7 +39,11 @@ module.exports = {
     data = newJob
   },
 
-  delete(id) {
-    data = data.filter(job => Number(job.id) !== Number(id))
+  async delete(id) {
+    const db = await Database()
+
+    await db.run(`DELETE FROM job WHERE id = ${id}`)
+
+    await db.close()
   }
 }
