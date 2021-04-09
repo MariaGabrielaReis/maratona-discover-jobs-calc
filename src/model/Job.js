@@ -17,8 +17,22 @@ module.exports = {
     }))
   },
 
-  create(newJob) {
-    data.push(newJob)
+  async create(newJob) {
+    const db = await Database()
+
+    await db.all(`INSERT INTO job (
+      name,
+      daily_hours,
+      total_hours,
+      created_at
+    ) VALUES (
+      "${newJob.name}",
+      ${newJob['daily-hours']},
+      ${newJob['total-hours']},
+      ${newJob['created_at']}
+    );`)
+
+    await db.close()
   },
 
   update(newJob) {

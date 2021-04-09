@@ -8,12 +8,7 @@ module.exports = {
   },
 
   async save(req, res) {
-    const jobs = await Job.get()
-    // pra ver a última posição do array, ? = se existir, pega o id (não existe posição -1)
-    const lastId = jobs[jobs.length - 1]?.id || 0
-
-    Job.create({
-      id: lastId + 1,
+    await Job.create({
       name: req.body.name,
       "daily-hours": req.body["daily-hours"],
       "total-hours": req.body["total-hours"],
