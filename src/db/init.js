@@ -12,7 +12,7 @@ Database.exec(`CREATE TABLE profile (
     hours-per-day INT,
     vacation-per-year INT,
     value-hour INT
-)`)
+);`)
 
 Database.exec(`CREATE TABLE job (
     id INT PRIMARY KEY AUTOINCREMENT,
@@ -20,7 +20,37 @@ Database.exec(`CREATE TABLE job (
     daily-hours INT,
     total-hours INT,
     created_at DATETIME
-)`)
+);`)
+
+Database.run(`INSERT INTO profile (
+    name, 
+    avatar,
+    monthly-budget,
+    days-per-week,
+    hours-per-day,
+    vacation-per-year,
+    value-hour
+) VALUES (
+    "Maby",
+    "https://unavatar.now.sh/github/MariaGabrielaReis",
+    3000,
+    5,
+    4,
+    10,
+    75
+);`)
+
+Database.run(`INSERT INTO profile (
+    name,
+    daily-hours,
+    total-hours,
+    created_at
+) VALUES (
+    "Padaria Pãozinho Quente",
+    2,
+    1,
+    1617992743828
+);`)
 
 // fechando conexão com banco
 Database.close()
