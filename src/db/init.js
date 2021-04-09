@@ -35,13 +35,13 @@ const initDb = {
             vacation_per_year,
             value_hour
         ) VALUES (
-            "Maby",
+            "Eu",
             "https://unavatar.now.sh/github/MariaGabrielaReis",
-            3000,
+            7000,
             5,
             4,
-            10,
-            75
+            13,
+            107.69
         );`)
 
         await db.run(`INSERT INTO job (
@@ -50,9 +50,9 @@ const initDb = {
             total_hours,
             created_at
         ) VALUES (
-            "Padaria Pãozinho Quente",
+            "Projeto Teste",
             2,
-            1,
+            10,
             1617992743828
         );`)
 
